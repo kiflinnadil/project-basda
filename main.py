@@ -37,6 +37,7 @@ def admin_login():
     finally:
         cur.close()
         conn.close()
+        
 
 def patient_register():
     conn = connect_db()
@@ -62,6 +63,7 @@ def patient_register():
     finally:
         cur.close()
         conn.close()
+        
 
 def patient_login():
     conn = connect_db()
@@ -89,20 +91,21 @@ def patient_login():
     finally:
         cur.close()
         conn.close()
+        
 
 def choose_option_admin():
-    while True:
-        print('(1) Kelola Data Dokter\n(2) Kelola Data Pasien\n(3) Keluar')
-        choose = input("Pilih Opsi: ")
-        
-        if choose == "1":
-            choose_option_dokter()
-        elif choose == "2":
-            choose_option_pasien()
-        elif choose == "3":
-            break
-        else:
-            print("Opsi tidak valid. Silakan coba lagi.")
+    print('(1) Kelola Data Dokter\n(2) Kelola Data Pasien\n(3) Kelola Data Obat')
+    choose = input("Pilih Opsi: ")
+    
+    if choose == "1":
+        choose_option_dokter()
+    elif choose == "2":
+        choose_option_pasien()
+    elif choose == "3":
+        choose_option_obat()
+    else:
+        print("Opsi tidak valid. Silakan coba lagi.")
+
 
 def choose_option_dokter():
     while True:
@@ -121,21 +124,44 @@ def choose_option_dokter():
             break
         else:
             print("Opsi tidak valid. Silakan coba lagi.")
+            
 
 def choose_option_pasien():
-    print('(1) Menambahkan data pasien\n(2) Melihat data pasien\n(3) Update data pasien\n(4) Menghapus data pasien')
-    choose = input("Pilih Opsi: ")
-    
-    if choose == "1":
-        tambah_data_pasien()
-    elif choose == "2":
-        read_data_pasien()
-    elif choose == "3":
-        update_data_pasien()
-    elif choose == "4":
-        hapus_data_pasien()
-    else:
-        print("Opsi tidak valid. Silakan coba lagi.")
+    while True:
+        print('(1) Menambahkan data pasien\n(2) Melihat data pasien\n(3) Update data pasien\n(4) Menghapus data pasien\n(5) Kembali ke menu utama')
+        choose = input("Pilih Opsi: ")
+        
+        if choose == "1":
+            tambah_data_pasien()
+        elif choose == "2":
+            read_data_pasien()
+        elif choose == "3":
+            update_data_pasien()
+        elif choose == "4":
+            hapus_data_pasien()
+        elif choose == "5" :
+            break
+        else:
+            print("Opsi tidak valid. Silakan coba lagi.")
+            
+            
+def choose_option_obat():
+    while True:
+        print('(1) Menambahkan data obat\n(2) Melihat data obat\n(3) Update data obat\n(4) Menghapus data obat\n(5) Kembali ke menu utama')
+        choose = input("Pilih Opsi: ")
+        
+        if choose == "1":
+            tambah_data_obat()
+        elif choose == "2":
+            read_data_obat()
+        elif choose == "3":
+            update_data_obat()
+        elif choose == "4":
+            hapus_data_obat()
+        elif choose == "5":
+            break
+        else:
+            print("Opsi tidak valid. Silakan coba lagi.")
 
 def choose_option_patient():
     print('(1) Melihat data dokter')
@@ -145,6 +171,7 @@ def choose_option_patient():
         read_data_dokter()
     else:
         print("Opsi tidak valid. Silakan coba lagi.")
+        
 
 def tambah_data_dokter():
     conn = connect_db()
@@ -181,6 +208,7 @@ def tambah_data_dokter():
     finally:
         cur.close()
         conn.close()
+        
 
 def read_data_dokter():
     conn = connect_db()
@@ -204,6 +232,7 @@ def read_data_dokter():
     finally:
         cur.close()
         conn.close()
+        
 
 def update_data_dokter():
     conn = connect_db()
@@ -250,6 +279,7 @@ def update_data_dokter():
     finally:
         cur.close()
         conn.close()
+        
 
 def hapus_data_dokter():
     conn = connect_db()
@@ -269,6 +299,7 @@ def hapus_data_dokter():
     finally:
         cur.close()
         conn.close()
+        
 
 def tambah_data_pasien():
     conn = connect_db()
@@ -301,6 +332,7 @@ def tambah_data_pasien():
     finally:
         cur.close()
         conn.close()
+        
 
 def read_data_pasien():
     conn = connect_db()
@@ -327,6 +359,7 @@ def read_data_pasien():
     finally:
         cur.close()
         conn.close()
+        
 
 def update_data_pasien():
     conn = connect_db()
@@ -380,6 +413,7 @@ def update_data_pasien():
     finally:
         cur.close()
         conn.close()
+        
 
 def hapus_data_pasien():
     conn = connect_db()
@@ -388,11 +422,32 @@ def hapus_data_pasien():
     cur = conn.cursor()
 
     try:
+        # Tampilkan semua pasien agar user bisa memverifikasi ID
+        query_select = "SELECT * FROM pasien"
+        cur.execute(query_select)
+        data = cur.fetchall()
+        
+        table = PrettyTable()
+        table.field_names = ["ID Pasien", "Nama Pasien", "Tanggal Lahir", "Alamat", "No Telepon"]
+        for row in data:
+            table.add_row(row)
+        
+        print(table)
+        
         id_pasien = input('Masukkan id pasien yang ingin dihapus: ')
-        delete_query = "DELETE FROM pasien WHERE id_pasien = %s"
-        cur.execute(delete_query, (id_pasien,))
-        conn.commit()
-        print(f"Data pasien dengan id {id_pasien} telah dihapus.")
+
+        # Cek apakah pasien dengan ID tersebut ada
+        check_query = "SELECT * FROM pasien WHERE id_pasien = %s"
+        cur.execute(check_query, (id_pasien,))
+        patient = cur.fetchone()
+
+        if patient:
+            delete_query = "DELETE FROM pasien WHERE id_pasien = %s"
+            cur.execute(delete_query, (id_pasien,))
+            conn.commit()
+            print(f"Data pasien dengan id {id_pasien} telah dihapus.")
+        else:
+            print(f"Pasien dengan id {id_pasien} tidak ditemukan.")
     except Exception as e:
         print(f"Error while deleting data: {e}")
         conn.rollback()
@@ -400,21 +455,156 @@ def hapus_data_pasien():
         cur.close()
         conn.close()
 
-def main():
-    print('(1) Login Admin\n(2) Registrasi Pasien\n(3) Login Pasien')
-    choice = input("Pilih Opsi: ")
+
+def tambah_data_obat():
+    conn = connect_db()
+    if not conn:
+        return
+    cur = conn.cursor()
     
-    if choice == "1":
-        if admin_login():
-            choose_option_admin()
-    elif choice == "2":
-        patient_register()       
-    elif choice == "3":
-        if patient_login():
-            choose_option_patient()
-    else:
-        print("Opsi tidak valid.")
+    try:
+        # Tampilkan jenis obat yang tersedia
+        data_jenis_obat = "SELECT * FROM obat"
+        cur.execute(data_jenis_obat)
+        jenis_obat = cur.fetchall()
+
+        jenis_table = PrettyTable()
+        jenis_table.field_names = ["ID Obat", "Nama Obat", "Harga", "ID Jenis Obat"]
+        for row in jenis_obat:
+            jenis_table.add_row(row)
+        
+        print(jenis_table)
+
+        total_input = int(input("Mau menambahkan berapa data? "))
+        for i in range(total_input):
+            id_obat = input("Masukkan ID obat: ")
+            nama_obat = input("Masukkan nama obat: ")
+            harga = float(input("Masukkan harga: "))
+            jenis_obat_id_jenisobat = int(input("Masukkan ID jenis obat: "))
+
+            # Sesuaikan nama kolom sesuai dengan struktur tabel di database
+            query = "INSERT INTO obat (id_obat, nama_obat, harga, jenis_obat_id) VALUES (%s, %s, %s, %s)"
+            cur.execute(query, (id_obat, nama_obat, harga, jenis_obat_id_jenisobat))
+        
+        conn.commit()
+        print("Data obat berhasil ditambahkan.")
+    except Exception as e:
+        print(f"Error while inserting data: {e}")
+        conn.rollback()
+    finally:
+        cur.close()
+        conn.close()
+        
+
+def read_data_obat():
+    conn = connect_db()
+    if not conn:
+        return
+    cur = conn.cursor()
+    
+    try:
+        lihat_data = "SELECT o.id_obat, o.nama_obat, o.harga, j.id_jenisobat FROM obat o JOIN jenis_obat j ON o.jenis_obat_id_jenisobat = j.id_jenisobat"
+        cur.execute(lihat_data)
+        data = cur.fetchall()
+
+        table = PrettyTable()
+        table.field_names = ["ID Obat", "Nama Obat", "Harga", "Jenis Obat"]
+        for row in data:
+            table.add_row(row)
+        
+        print(table)
+    except Exception as e:
+        print(f"Error while reading data: {e}")
+    finally:
+        cur.close()
+        conn.close()
+        
+
+def update_data_obat():
+    conn = connect_db()
+    if not conn:
+        return
+    cur = conn.cursor()
+    
+    try:
+        lihat_data = "SELECT o.id_obat, o.nama_obat, o.harga, j.id_jenisobat FROM obat o JOIN jenis_obat j ON o.jenis_obat_id_jenisobat = j.id_jenisobat"
+        cur.execute(lihat_data)
+        data = cur.fetchall()
+
+        table = PrettyTable()
+        table.field_names = ["ID Obat", "Nama Obat", "Harga", "Jenis Obat ID"]
+        for row in data:
+            table.add_row(row)
+        
+        print(table)
+
+        id_obat = input('Masukkan ID obat yang ingin di-update: ')
+        show_query = "SELECT * FROM obat WHERE id_obat = %s"
+        cur.execute(show_query, (id_obat,))
+        data2 = cur.fetchone()
+
+        if data2:
+            table_single = PrettyTable()
+            table_single.field_names = ["ID Obat", "Nama Obat", "Harga", "Jenis Obat ID"]
+            table_single.add_row(data2)
+            print(table_single)
+
+            nama_obat = input(f"Masukkan nama obat (lama: {data2[1]}): ")
+            harga = float(input(f"Masukkan harga (lama: {data2[2]}): "))
+            jenis_obat_id_jenisobat = int(input(f"Masukkan ID jenis obat (lama: {data2[3]}): "))
+
+            update_query = "UPDATE obat SET nama_obat = %s, harga = %s, jenis_obat_id_jenisobat = %s WHERE id_obat = %s"
+            cur.execute(update_query, (nama_obat, harga, jenis_obat_id_jenisobat, id_obat))
+            conn.commit()
+            print("Data obat berhasil diupdate.")
+        else:
+            print("Data obat tidak ditemukan.")
+    except Exception as e:
+        print(f"Error while updating data: {e}")
+        conn.rollback()
+    finally:
+        cur.close()
+        conn.close()
+
+
+def hapus_data_obat():
+    conn = connect_db()
+    if not conn:
+        return
+    cur = conn.cursor()
+
+    try:
+        id_obat = input('Masukkan id obat yang ingin dihapus: ')
+        delete_query = "DELETE FROM obat WHERE id_obat = %s"
+        cur.execute(delete_query, (id_obat,))
+        conn.commit()
+        print(f"Data obat dengan id {id_obat} telah dihapus.")
+    except Exception as e:
+        print(f"Error while deleting data: {e}")
+        conn.rollback()
+    finally:
+        cur.close()
+        conn.close()
+
+
+def main():
+    while True:
+        print('(1) Login Admin\n(2) Registrasi Pasien\n(3) Login Pasien\n(4) Keluar')
+        choice = input("Pilih Opsi: ")
+        
+        if choice == "1":
+            if admin_login():
+                choose_option_admin()
+        elif choice == "2":
+            patient_register()
+        elif choice == "3":
+            if patient_login():
+                choose_option_patient()
+        elif choice == "4":
+            print("Terima kasih! Sampai jumpa lagi.")
+            break
+        else:
+            print("Opsi tidak valid. Silakan coba lagi.")
 
 if __name__ == "__main__":
     main()
-
