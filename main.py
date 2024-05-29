@@ -38,7 +38,7 @@ def admin_login():
                 print("\033[1mNama admin atau ID admin salah. Coba lagi.\033[0m")
                 time.sleep(2)  # Tunggu 2 detik sebelum kembali ke tampilan login
         except Exception as e:
-            print(f"Error during login: {e}")
+            print(f"\033[1mError during login:\033[1m {e}")
             time.sleep(2)  # Tunggu 2 detik sebelum kembali ke tampilan login
         finally:
             cur.close()
@@ -99,7 +99,7 @@ def patient_login():
                 print("\033[1mNama pasien atau ID pasien salah.\033[0m")
                 time.sleep(2)  # Tunggu 2 detik sebelum kembali ke tampilan login
         except Exception as e:
-            print(f"Error during login: {e}")
+            print(f"\033[1mError during login:\033[1m {e}")
             time.sleep(2)  # Tunggu 2 detik sebelum kembali ke tampilan login
         finally:
             cur.close()
@@ -370,9 +370,9 @@ def tambah_data_pasien():
             cur.execute(query, (id_pasien, nama_pasien, tanggal_lahir, alamat, no_telepon))
         
         conn.commit()
-        print("Data pasien berhasil ditambahkan.")
+        print("\033[1mData pasien berhasil ditambahkan.\033[1m")
     except Exception as e:
-        print(f"Error while inserting data: {e}")
+        print(f"\033[1mError while inserting data:\033[1m {e}")
         conn.rollback()
     finally:
         cur.close()
@@ -400,7 +400,7 @@ def read_data_pasien():
         
         print(table)
     except Exception as e:
-        print(f"Error while reading data: {e}")
+        print(f"\033[1mError while reading data:\033[1m {e}")
     finally:
         cur.close()
         conn.close()
@@ -452,7 +452,7 @@ def update_data_pasien():
         else:
             print("\033[1mData pasien tidak ditemukan.\033[0m")
     except Exception as e:
-        print(f"Error while updating data: {e}")
+        print(f"\033[1mError while updating data:\033[1m {e}")
         conn.rollback()
     finally:
         cur.close()
@@ -493,7 +493,7 @@ def hapus_data_pasien():
         else:
             print(f"Pasien dengan id {id_pasien} tidak ditemukan.")
     except Exception as e:
-        print(f"Error while deleting data: {e}")
+        print(f"\033[1mError while deleting data:\033[1m {e}")
         conn.rollback()
     finally:
         cur.close()
@@ -557,7 +557,7 @@ def read_data_obat():
         
         print(table)
     except Exception as e:
-        print(f"Error while reading data: {e}")
+        print(f"\033[1mError while reading data:\033[1m {e}")
     finally:
         cur.close()
         conn.close()
@@ -603,7 +603,7 @@ def update_data_obat():
         else:
             print("\033[1mData obat tidak ditemukan.\033[1m")
     except Exception as e:
-        print(f"Error while updating data: {e}")
+        print(f"\033[1mError while updating data:\033[1m {e}")
         conn.rollback()
     finally:
         cur.close()
@@ -634,7 +634,7 @@ def hapus_data_obat():
         conn.commit()
         print(f"\033[1mData obat dengan id {id_obat} telah dihapus.\033[1m")
     except Exception as e:
-        print(f"Error while deleting data: {e}")
+        print(f"\033[1mError while deleting data:\033[1m {e}")
         conn.rollback()
     finally:
         cur.close()
