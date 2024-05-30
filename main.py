@@ -32,15 +32,14 @@ def admin_login():
 
             if admin:
                 print("\033[1mLogin berhasil.\033[0m")
-                time.sleep(2)  # Tunggu 2 detik sebelum masuk ke menu admin
-                return id_admin  # Mengembalikan ID admin setelah login berhasil
+                time.sleep(2)  
+                return id_admin  
             else:
                 print("\033[1mNama admin atau ID admin salah. Coba lagi.\033[0m")
-                time.sleep(2)  # Tunggu 2 detik sebelum kembali ke tampilan login
+                time.sleep(2) 
         except Exception as e:
             print(f"\033[1mError during login:\033[1m {e}")
-            time.sleep(2)  # Tunggu 2 detik sebelum kembali ke tampilan login
-        finally:
+            time.sleep(2) 
             cur.close()
             conn.close()
 
@@ -72,6 +71,7 @@ def patient_register():
     finally:
         cur.close()
         conn.close()
+    input("Tekan Enter untuk kembali ke Menu Utama...")
 
 def patient_login():
     while True:
@@ -94,23 +94,31 @@ def patient_login():
 
             if patient:
                 print("\033[1mLogin berhasil.\033[0m")
-                return id_pasien  # Mengembalikan ID pasien setelah login berhasil
+                return id_pasien  
             else:
                 print("\033[1mNama pasien atau ID pasien salah.\033[0m")
-                time.sleep(2)  # Tunggu 2 detik sebelum kembali ke tampilan login
+                time.sleep(2) 
         except Exception as e:
             print(f"\033[1mError during login:\033[1m {e}")
-            time.sleep(2)  # Tunggu 2 detik sebelum kembali ke tampilan login
+            time.sleep(2)  
         finally:
             cur.close()
             conn.close()
-
+            
 def choose_option_admin():
     while True:
         os.system('clear')
-        print('\033[1m(1) Kelola Data Dokter\n(2) Kelola Data Pasien\n(3) Kelola Data Obat\n(4) Exit\033[0m')
-        choose = input("\033[1mPilih Opsi: \033[0m")
-        
+        print("\033[1;36m+========================================================+\033[0m")
+        print("\033[1;36m|                        ADMIN                           |\033[0m")
+        print("\033[1;36m+========================================================+\033[0m")
+        print("\033[1;37m|    [1]   Kelola Data Dokter                            |\033[0m")
+        print("\033[1;37m|    [2]   Kelola Data Pasien                            |\033[0m")
+        print("\033[1;37m|    [3]   Kelola Data Obat                              |\033[0m")
+        print("\033[1;37m|    [4]   Kelola Data Ruangan                           |\033[0m")
+        print("\033[1;37m|    [5]   Exit                                          |\033[0m")
+        print("\033[1;36m+========================================================+\033[0m")
+        choose = input("\033[1;37mPilih Opsi: \033[0m")
+
         if choose == "1":
             choose_option_dokter()
         elif choose == "2":
@@ -118,46 +126,84 @@ def choose_option_admin():
         elif choose == "3":
             choose_option_obat()
         elif choose == "4":
+            choose_option_ruangan()
+        elif choose == "5":
             print("\n\033[1mTerima kasih! Kembali ke menu utama.\033[0m\n")
-            time.sleep(2)  # Tunggu 2 detik sebelum kembali ke menu utama
-            break  # Keluar dari loop dan kembali ke menu utama
+            time.sleep(2)  
+            break  
         else:
             print("\033[91mOpsi tidak valid. Silakan coba lagi.\033[0m")
-    main()  # Tampilkan kembali menu utama setelah keluar dari menu admin
+    main()  
 
 def choose_option_dokter():
     os.system('clear')
     while True:
-        print('\033[1m(1) Menambahkan data dokter\n(2) Melihat data dokter\n(3) Update data dokter\n(4) Menghapus data dokter\n(5) Kembali ke Menu Admin\033[0m')
-        choose = input("\033[1mPilih Opsi: \033[0m")
+        print("\033[1;36m+========================================================+\033[0m")
+        print("\033[1;36m|                  KELOLA DATA DOKTER                    |\033[0m")
+        print("\033[1;36m+========================================================+\033[0m")
+        print("\033[1;37m|    [1]   Menambahkan Data Dokter                       |\033[0m")
+        print("\033[1;37m|    [2]   Melihat Data Dokter                           |\033[0m")
+        print("\033[1;37m|    [3]   Update Data Dokter                            |\033[0m")
+        print("\033[1;37m|    [4]   Menghapus Data Dokter                         |\033[0m")
+        print("\033[1;37m|    [5]   Kembali ke Menu Admin                         |\033[0m")
+        print("\033[1;36m+========================================================+\033[0m")
+        choose = input("\033[1;37mPilih Opsi: \033[0m")
         
+        if choose.strip() == "":
+            print("Kembali ke Menu Utama...")
+            input("Tekan Enter untuk melanjutkan...")
+       
         if choose == "1":
             tambah_data_dokter()
+            # os.system('clear')
         elif choose == "2":
+            os.system('clear')
             read_data_dokter()
+            input("Tekan Enter untuk kembali...")
+            os.system('clear')
         elif choose == "3":
             update_data_dokter()
+            # os.system('clear')
         elif choose == "4":
             hapus_data_dokter()
+            os.system('clear')
         elif choose == "5":
-            choose_option_admin()  # Kembali ke menu admin
+            choose_option_admin()
         else:
             print("\033[91mOpsi tidak valid. Silakan coba lagi.\033[0m")
 
 def choose_option_pasien():
     os.system('clear')
     while True:
-        print('\033[1m(1) Tambah Data Pasien\n(2) Lihat Data Pasien\n(3) Update Data Pasien\n(4) Hapus Data Pasien\n(5) Kembali ke menu utama\033[0m')
-        choose = input("Pilih Opsi: ")
+        print("\033[1;36m+========================================================+\033[0m")
+        print("\033[1;36m|                  KELOLA DATA PASIEN                    |\033[0m")
+        print("\033[1;36m+========================================================+\033[0m")
+        print("\033[1;37m|    [1]   Tambah Data Pasien                            |\033[0m")
+        print("\033[1;37m|    [2]   Lihat Data Pasien                             |\033[0m")
+        print("\033[1;37m|    [3]   Update Data Pasien                            |\033[0m")
+        print("\033[1;37m|    [4]   Hapus Data Pasien                             |\033[0m")
+        print("\033[1;37m|    [5]   Kembali ke Menu Admin                         |\033[0m")
+        print("\033[1;36m+========================================================+\033[0m")
+        choose = input("\033[1;37mPilih Opsi: \033[0m")
         
+        if choose.strip() == "":
+            print("Kembali ke Menu Utama...")
+            input("Tekan Enter untuk melanjutkan...")
+      
         if choose == "1":
             tambah_data_pasien()
+            # os.system('clear')
         elif choose == "2":
+            os.system('clear')
             read_data_pasien()
+            input("Tekan Enter untuk kembali...")
+            os.system('clear')
         elif choose == "3":
             update_data_pasien()
+            # os.system('clear')
         elif choose == "4":
             hapus_data_pasien()
+            os.system('clear')
         elif choose == "5" :
             break
         else:
@@ -166,40 +212,81 @@ def choose_option_pasien():
 def choose_option_obat():
     os.system('clear')
     while True:
-        print('\033[1m(1) Menambahkan data obat\n(2) Melihat data obat\n(3) Update data obat\n(4) Menghapus data obat\n(5) Kembali ke menu utama\033[0m')
-        choose = input("\033[1mPilih Opsi:\033[0m ")
+        print("\033[1;36m+========================================================+\033[0m")
+        print("\033[1;36m|                   KELOLA DATA OBAT                     |\033[0m")
+        print("\033[1;36m+========================================================+\033[0m")
+        print("\033[1;37m|    [1]   Menambahkan Data Obat                         |\033[0m")
+        print("\033[1;37m|    [2]   Melihat Data Obat                             |\033[0m")
+        print("\033[1;37m|    [3]   Update Data Obat                              |\033[0m")
+        print("\033[1;37m|    [4]   Menghapus Data Obat                           |\033[0m")
+        print("\033[1;37m|    [5]   Kembali ke Menu Admin                         |\033[0m")
+        print("\033[1;36m+========================================================+\033[0m")
+        choose = input("\033[1;37mPilih Opsi: \033[0m")
         
+        if choose.strip() == "":
+            print("Kembali ke Menu Utama...")
+            input("Tekan Enter untuk melanjutkan...")
+    
         if choose == "1":
             tambah_data_obat()
+            # os.system('clear')
         elif choose == "2":
+            os.system('clear')
             read_data_obat()
+            input("Tekan Enter untuk kembali...")
+            os.system('clear')
         elif choose == "3":
             update_data_obat()
+            # os.system('clear')
         elif choose == "4":
             hapus_data_obat()
+            os.system('clear')
         elif choose == "5":
             break
         else:
             print("\033[1mOpsi tidak valid. Silakan coba lagi.\033[0m")
-
-def choose_option_pasien():
+         
+def choose_option_ruangan():
     os.system('clear')
     while True:
-        print('\033[1m(1) Tambahkan data pasien\n(2) Lihat data pasien\n(3) Update data pasien\n(4) Hapus data pasien\n(5) Kembali ke menu utama\033[0m')
-        choose = input("\033[1mPilih Opsi:\033[0m ")
+        print("\033[1;36m+========================================================+\033[0m")
+        print("\033[1;36m|                   KELOLA DATA RUANGAN                  |\033[0m")
+        print("\033[1;36m+========================================================+\033[0m")
+        print("\033[1;37m|    [1]   Tambah Data Ruangan                           |\033[0m")
+        print("\033[1;37m|    [2]   Lihat Data Ruangan                            |\033[0m")
+        print("\033[1;37m|    [3]   Update Data Ruangan                           |\033[0m")
+        print("\033[1;37m|    [4]   Hapus Data Ruangan                            |\033[0m")
+        print("\033[1;37m|    [5]   Kembali ke Menu Admin                         |\033[0m")
+        print("\033[1;36m+========================================================+\033[0m")
+        choose = input("\033[1;37mPilih Opsi: \033[0m")
         
+        if choose.strip() == "":
+            print("Kembali ke Menu Utama...")
+            input("Tekan Enter untuk melanjutkan...")
+
         if choose == "1":
-            tambah_data_pasien()  # Panggil fungsi untuk menambahkan data pasien
+            tambah_data_ruangan()
+            # os.system('clear')
         elif choose == "2":
-            read_data_pasien()  # Panggil fungsi untuk melihat data pasien
+            os.system('clear')
+            read_data_ruangan()
+            input("Tekan Enter untuk kembali...")
+            os.system('clear')
         elif choose == "3":
-            update_data_pasien()  # Panggil fungsi untuk mengupdate data pasien
+            update_data_ruangan()
+            # os.system('clear')
         elif choose == "4":
-            hapus_data_pasien()  # Panggil fungsi untuk menghapus data pasien
+            hapus_data_ruangan()
+            os.system('clear')
         elif choose == "5":
-            break  # Keluar dari loop dan kembali ke menu utama
+            print("Kembali ke Menu Admin...")
+            break
         else:
             print("\033[1mOpsi tidak valid. Silakan coba lagi.\033[0m")
+            
+#======================================================================================================================================================      
+# Implementasi Fungsi CRUD untuk Dokter   
+#======================================================================================================================================================       
 
 def tambah_data_dokter():
     os.system('clear')
@@ -230,7 +317,9 @@ def tambah_data_dokter():
             cur.execute(query, (id_dokter, nama_dokter, alamat, no_telepon))
         
         conn.commit()
+        os.system('clear')
         print("\033[1mData dokter berhasil ditambahkan.\033[0m")
+        input("Tekan Enter untuk kembali...")
     except Exception as e:
         print(f"\033[1mError while inserting data:\033[0m {e}")
         conn.rollback()
@@ -299,7 +388,9 @@ def update_data_dokter():
             update_query = "UPDATE dokter SET nama_dokter = %s, alamat = %s, no_telepon = %s WHERE id_dokter = %s"
             cur.execute(update_query, (nama_dokter, alamat, no_telepon, id_dokter))
             conn.commit()
+            os.system('clear')
             print("\033[1mData dokter berhasil diupdate.\033[0m")
+            input("Tekan Enter untuk kembali...")
         else:
             print("\033[1mData dokter tidak ditemukan.\033[0m")
     except Exception as e:
@@ -329,16 +420,30 @@ def hapus_data_dokter():
         print(table)
         
         id_dokter = input('\033[1mMasukkan id dokter yang ingin dihapus:\033[0m ')
+        
+        query_check = "SELECT 1 FROM dokter WHERE id_dokter = %s"
+        cur.execute(query_check, (id_dokter,))
+        if cur.fetchone() is None:
+            print(f"\033[1mID dokter {id_dokter} tidak ditemukan.\033[0m")
+            input("Tekan Enter untuk kembali...")
+            return
+        
         delete_query = "DELETE FROM dokter WHERE id_dokter = %s"
         cur.execute(delete_query, (id_dokter,))
         conn.commit()
+        os.system('clear')
         print(f"\033[1mData dokter dengan id {id_dokter} telah dihapus.\033[0m")
+        input("Tekan Enter untuk kembali...")
     except Exception as e:
         print(f"\033[1mError while deleting data:\033[0m {e}")
         conn.rollback()
     finally:
         cur.close()
         conn.close()
+        
+#======================================================================================================================================================      
+# Implementasi Fungsi CRUD untuk Pasien   
+#======================================================================================================================================================       
 
 def tambah_data_pasien():
     os.system('clear')
@@ -370,9 +475,11 @@ def tambah_data_pasien():
             cur.execute(query, (id_pasien, nama_pasien, tanggal_lahir, alamat, no_telepon))
         
         conn.commit()
-        print("\033[1mData pasien berhasil ditambahkan.\033[1m")
+        os.system('clear')
+        print("\033[1mData pasien berhasil ditambahkan.\033[0m")
+        input("Tekan Enter untuk kembali...")
     except Exception as e:
-        print(f"\033[1mError while inserting data:\033[1m {e}")
+        print(f"\033[1mError while inserting data:\033[0m {e}")
         conn.rollback()
     finally:
         cur.close()
@@ -393,7 +500,6 @@ def read_data_pasien():
         table = PrettyTable()
         table.field_names = ["ID Pasien", "Nama Pasien", "Tanggal Lahir", "Alamat", "No Telepon"]
         for row in data:
-            # Format tanggal lahir menjadi YYYY-MM-DD
             formatted_row = list(row)
             formatted_row[2] = formatted_row[2].strftime('%Y-%m-%d')
             table.add_row(formatted_row)
@@ -466,7 +572,6 @@ def hapus_data_pasien():
     cur = conn.cursor()
 
     try:
-        # Tampilkan semua pasien agar user bisa memverifikasi ID
         query_select = "SELECT * FROM pasien"
         cur.execute(query_select)
         data = cur.fetchall()
@@ -479,25 +584,30 @@ def hapus_data_pasien():
         print(table)
         
         id_pasien = input('\033[1mMasukkan id pasien yang ingin dihapus:\033[1m ')
+        
+        query_check = "SELECT 1 FROM pasien WHERE id_pasien = %s"
+        cur.execute(query_check, (id_pasien,))
+        if cur.fetchone() is None:
+            print(f"\033[1mID pasien {id_pasien} tidak ditemukan.\033[0m")
+            input("Tekan Enter untuk kembali...")
+            return
 
-        # Cek apakah pasien dengan ID tersebut ada
-        check_query = "SELECT * FROM pasien WHERE id_pasien = %s"
-        cur.execute(check_query, (id_pasien,))
-        patient = cur.fetchone()
-
-        if patient:
-            delete_query = "DELETE FROM pasien WHERE id_pasien = %s"
-            cur.execute(delete_query, (id_pasien,))
-            conn.commit()
-            print(f"\033[1mData pasien dengan id {id_pasien} telah dihapus.\033[1m")
-        else:
-            print(f"Pasien dengan id {id_pasien} tidak ditemukan.")
+        delete_query = "DELETE FROM pasien WHERE id_pasien = %s"
+        cur.execute(delete_query, (id_pasien,))
+        conn.commit()
+        os.system('clear')
+        print(f"\033[1mData pasien dengan id {id_pasien} telah dihapus.\033[1m")
+        input("Tekan Enter untuk kembali...")
     except Exception as e:
-        print(f"\033[1mError while deleting data:\033[1m {e}")
+        print(f"\033[1mError while deleting data:\033[0m {e}")
         conn.rollback()
     finally:
         cur.close()
         conn.close()
+        
+#======================================================================================================================================================      
+# Implementasi Fungsi CRUD untuk Obat
+#======================================================================================================================================================       
 
 def tambah_data_obat():
     os.system('clear')
@@ -507,7 +617,6 @@ def tambah_data_obat():
     cur = conn.cursor()
     
     try:
-        # Tampilkan jenis obat yang tersedia
         data_jenis_obat = "SELECT * FROM obat"
         cur.execute(data_jenis_obat)
         jenis_obat = cur.fetchall()
@@ -530,7 +639,9 @@ def tambah_data_obat():
             cur.execute(query, (id_obat, nama_obat, harga, jenis_obat_id_jenisobat))
         
         conn.commit()
+        os.system('clear')
         print("\033[1mData obat berhasil ditambahkan.\033[1m")
+        input("Tekan Enter untuk kembali...")
     except Exception as e:
         print(f"Error while inserting data: {e}")
         conn.rollback()
@@ -599,7 +710,9 @@ def update_data_obat():
             update_query = "UPDATE obat SET nama_obat = %s, harga = %s, jenis_obat_id_jenisobat = %s WHERE id_obat = %s"
             cur.execute(update_query, (nama_obat, harga, jenis_obat_id_jenisobat, id_obat))
             conn.commit()
+            os.system('clear')
             print("\033[1mData obat berhasil diupdate.\033[1m")
+            input("Tekan Enter untuk kembali...")
         else:
             print("\033[1mData obat tidak ditemukan.\033[1m")
     except Exception as e:
@@ -629,12 +742,182 @@ def hapus_data_obat():
         print(table)
         
         id_obat = input('\033[1mMasukkan id obat yang ingin dihapus:\033[1m ')
+
+        try:
+            id_obat = int(id_obat)
+        except ValueError:
+            print("\033[1mID obat harus berupa angka.\033[0m")
+            input("Tekan Enter untuk kembali...")
+            return
+        
+        query_check = "SELECT 1 FROM obat WHERE id_obat = %s"
+        cur.execute(query_check, (id_obat,))
+        if cur.fetchone() is None:
+            print(f"\033[1mID obat {id_obat} tidak ditemukan.\033[0m")
+            input("Tekan Enter untuk kembali...")
+            return
+        
         delete_query = "DELETE FROM obat WHERE id_obat = %s"
         cur.execute(delete_query, (id_obat,))
         conn.commit()
-        print(f"\033[1mData obat dengan id {id_obat} telah dihapus.\033[1m")
+        os.system('clear')
+        print(f"\033[1mData obat dengan id {id_obat} telah dihapus.\033[0m")
+        input("Tekan Enter untuk kembali...")
     except Exception as e:
-        print(f"\033[1mError while deleting data:\033[1m {e}")
+        print(f"\033[1mError while deleting data:\033[0m {e}")
+        conn.rollback()
+    finally:
+        cur.close()
+        conn.close()
+
+#======================================================================================================================================================      
+# Implementasi Fungsi CRUD untuk Ruangan   
+#======================================================================================================================================================           
+
+def tambah_data_ruangan():
+    os.system('clear')
+    conn = connect_db()
+    if not conn:
+        return
+    cur = conn.cursor()
+
+    try:
+        lihat_data = "SELECT * FROM ruangan"
+        cur.execute(lihat_data)
+        data = cur.fetchall()
+
+        table = PrettyTable()
+        table.field_names = ["ID Ruangan", "Nama Ruangan"]
+        for row in data:
+            table.add_row(row)
+
+        print(table)
+        
+        total_input = int(input("\033[1mMau menambahkan berapa data?\033[1m "))
+        for i in range(total_input):
+            id_ruangan = input("\033[1mMasukkan ID ruangan:\033[0m ")
+            nama_ruangan = input("\033[1mMasukkan nama ruangan:\033[0m ")
+            
+            query = "INSERT INTO ruangan (id_ruangan, nama_ruangan) VALUES (%s,%s)"
+            cur.execute(query, (id_ruangan,nama_ruangan,))
+        
+        conn.commit()
+        os.system('clear')
+        print("\033[1mData ruangan berhasil ditambahkan.\033[1m")
+        input("Tekan Enter untuk kembali...")
+              
+    except Exception as e:
+        print(f"\033[91mError while inserting data:\033[0m {e}")
+        conn.rollback()
+    finally:
+        cur.close()
+        conn.close()
+        
+def read_data_ruangan():
+    os.system('clear')
+    conn = connect_db()
+    if not conn:
+        return
+    cur = conn.cursor()
+
+    try:
+        lihat_data = "SELECT * FROM ruangan"
+        cur.execute(lihat_data)
+        data = cur.fetchall()
+
+        table = PrettyTable()
+        table.field_names = ["ID Ruangan", "Nama Ruangan"]
+        for row in data:
+            table.add_row(row)
+
+        print(table)
+    except Exception as e:
+        print(f"\033[1mError while reading data:\033[0m {e}")
+    finally:
+        cur.close()
+        conn.close()  
+        
+def update_data_ruangan():
+    os.system('clear')
+    conn = connect_db()
+    if not conn:
+        return
+    cur = conn.cursor()
+
+    try:
+        lihat_data = "SELECT * FROM ruangan"
+        cur.execute(lihat_data)
+        data = cur.fetchall()
+
+        table = PrettyTable()
+        table.field_names = ["ID Ruangan", "Nama Ruangan"]
+        for row in data:
+            table.add_row(row)
+
+        print(table)
+
+        id_ruangan = input('\033[1mMasukkan ID ruangan yang ingin di-update:\033[0m ')
+        show_query = "SELECT * FROM ruangan WHERE id_ruangan = %s"
+        cur.execute(show_query, (id_ruangan,))
+        data2 = cur.fetchone()
+
+        if data2:
+            table_single = PrettyTable()
+            table_single.field_names = ["ID Ruangan", "Nama Ruangan"]
+            table_single.add_row(data2)
+            print(table_single)
+
+            nama_ruangan = input(f"\033[1mMasukkan nama ruangan (lama:\033[0m {data2[1]}): ")
+
+            update_query = "UPDATE ruangan SET nama_ruangan = %s WHERE id_ruangan = %s"
+            cur.execute(update_query, (nama_ruangan, id_ruangan))
+            conn.commit()
+            print("\033[1mData ruangan berhasil diupdate.\033[0m")
+        else:
+            print("\033[1mData ruangan tidak ditemukan.\033[0m")
+    except Exception as e:
+        print(f"\033[1mError while updating data:\033[0m {e}")
+        conn.rollback()
+    finally:
+        cur.close()
+        conn.close()
+        
+def hapus_data_ruangan():
+    os.system('clear')
+    conn = connect_db()
+    if not conn:
+        return
+    cur = conn.cursor()
+
+    try:
+        lihat_data = "SELECT * FROM ruangan"
+        cur.execute(lihat_data)
+        data = cur.fetchall()
+
+        table = PrettyTable()
+        table.field_names = ["ID Ruangan", "Nama Ruangan"]
+        for row in data:
+            table.add_row(row)
+
+        print(table)
+
+        id_ruangan = input('\033[1mMasukkan id ruangan yang ingin dihapus:\033[0m ')
+        
+        query_check = "SELECT 1 FROM ruangan WHERE id_ruangan = %s"
+        cur.execute(query_check, (id_ruangan,))
+        if cur.fetchone() is None:
+            print(f"\033[1mID ruangan {id_ruangan} tidak ditemukan.\033[0m")
+            input("Tekan Enter untuk kembali...")
+            return
+        
+        delete_query = "DELETE FROM ruangan WHERE id_ruangan = %s"
+        cur.execute(delete_query, (id_ruangan,))
+        conn.commit()
+        os.system('clear')
+        print(f"\033[1mData ruangan dengan id {id_ruangan} telah dihapus.\033[0m")
+        input("Tekan Enter untuk kembali...")
+    except Exception as e:
+        print(f"\033[1mError while deleting data:\033[0m {e}")
         conn.rollback()
     finally:
         cur.close()
@@ -659,13 +942,13 @@ def main():
                 choose_option_admin()
         elif choice == "2":
             patient_register()
-            main()  # Setelah registrasi pasien, langsung keluar dari program
+            main() 
         elif choice == "3":
             if patient_login():
-                main()  # Setelah login pasien, langsung keluar dari program
+                main()  
         elif choice == "4":
             print("\033[1;33mTerima kasih! Sampai jumpa lagi.\033[0m")
-            break  # Hentikan eksekusi program setelah mencetak pesan terima kasih
+            break  
         else:
             print("\033[91mOpsi tidak valid. Silakan coba lagi.\033[0m")
 
