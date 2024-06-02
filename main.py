@@ -778,12 +778,12 @@ def read_data_obat():
     cur = conn.cursor()
     
     try:
-        lihat_data = "SELECT o.id_obat, o.nama_obat, o.harga, j.id_jenisobat FROM obat o JOIN jenis_obat j ON o.jenis_obat_id_jenisobat = j.id_jenisobat"
+        lihat_data = "SELECT o.id_obat, o.nama_obat, o.harga, j.jenis_obat FROM obat o JOIN jenis_obat j ON o.jenis_obat_id_jenisobat = j.id_jenisobat"
         cur.execute(lihat_data)
         data = cur.fetchall()
 
         table = PrettyTable()
-        table.field_names = ["ID Obat", "Nama Obat", "Harga", "ID Jenis Obat"]
+        table.field_names = ["ID Obat", "Nama Obat", "Harga", "Jenis Obat"]
         for row in data:
             table.add_row(row)
         
@@ -804,12 +804,12 @@ def update_data_obat():
     cur = conn.cursor()
     
     try:
-        lihat_data = "SELECT o.id_obat, o.nama_obat, o.harga, j.id_jenisobat FROM obat o JOIN jenis_obat j ON o.jenis_obat_id_jenisobat = j.id_jenisobat"
+        lihat_data = "SELECT o.id_obat, o.nama_obat, o.harga, j.jenis_obat FROM obat o JOIN jenis_obat j ON o.jenis_obat_id_jenisobat = j.id_jenisobat"
         cur.execute(lihat_data)
         data = cur.fetchall()
 
         table = PrettyTable()
-        table.field_names = ["ID Obat", "Nama Obat", "Harga", "ID Jenis Obat"]
+        table.field_names = ["ID Obat", "Nama Obat", "Harga", "Jenis Obat"]
         for row in data:
             table.add_row(row)
         
@@ -822,7 +822,7 @@ def update_data_obat():
 
         if data2:
             table_single = PrettyTable()
-            table_single.field_names = ["ID Obat", "Nama Obat", "Harga", "ID Jenis Obat"]
+            table_single.field_names = ["ID Obat", "Nama Obat", "Harga", "Jenis Obat"]
             table_single.add_row(data2)
             print(table_single)
 
@@ -856,7 +856,7 @@ def hapus_data_obat():
     cur = conn.cursor()
 
     try:
-        lihat_data = "SELECT o.id_obat, o.nama_obat, o.harga, j.id_jenisobat FROM obat o JOIN jenis_obat j ON o.jenis_obat_id_jenisobat = j.id_jenisobat"
+        lihat_data = "SELECT o.id_obat, o.nama_obat, o.harga, j.jenis_obat FROM obat o JOIN jenis_obat j ON o.jenis_obat_id_jenisobat = j.id_jenisobat"
         cur.execute(lihat_data)
         data = cur.fetchall()
 
